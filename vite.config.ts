@@ -16,7 +16,7 @@ export default defineConfig({
           @use "@/assets/styles/_variables.scss";
           @use "@/assets/styles/_mixins.scss";
         `,
-        silenceDeprecations: ['import'],
+        silenceDeprecations: ['import', 'legacy-js-api'],
       },
     },
   },
