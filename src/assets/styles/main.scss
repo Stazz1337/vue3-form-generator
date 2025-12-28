@@ -1,0 +1,169 @@
+@import 'variables';
+@import 'mixins';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: $font-family-base;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  transition: background-color $transition-base, color $transition-base;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+  margin-bottom: $spacing-md;
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: $font-size-3xl;
+}
+h2 {
+  font-size: $font-size-2xl;
+}
+h3 {
+  font-size: $font-size-xl;
+}
+h4 {
+  font-size: $font-size-lg;
+}
+h5 {
+  font-size: $font-size-base;
+}
+h6 {
+  font-size: $font-size-sm;
+}
+
+p {
+  margin-bottom: $spacing-md;
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: var(--primary-dark);
+  }
+}
+
+ul,
+ol {
+  padding-left: $spacing-xl;
+  margin-bottom: $spacing-md;
+}
+
+code {
+  font-family: $font-family-mono;
+  background: var(--bg-tertiary);
+  padding: 0.2rem 0.4rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9em;
+}
+
+pre {
+  font-family: $font-family-mono;
+  background: var(--bg-tertiary);
+  padding: $spacing-md;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  margin-bottom: $spacing-md;
+  @include custom-scrollbar;
+
+  code {
+    background: none;
+    padding: 0;
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-xl;
+}
+
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+
+.mt-sm {
+  margin-top: $spacing-sm;
+}
+.mt-md {
+  margin-top: $spacing-md;
+}
+.mt-lg {
+  margin-top: $spacing-lg;
+}
+.mt-xl {
+  margin-top: $spacing-xl;
+}
+
+.mb-sm {
+  margin-bottom: $spacing-sm;
+}
+.mb-md {
+  margin-bottom: $spacing-md;
+}
+.mb-lg {
+  margin-bottom: $spacing-lg;
+}
+.mb-xl {
+  margin-bottom: $spacing-xl;
+}
+
+.card {
+  @include card;
+}
+
+.btn {
+  @include button-base;
+}
+
+.btn-primary {
+  @include button-primary;
+}
+
+.btn-secondary {
+  @include button-secondary;
+}
+
+.form-control {
+  @include input-base;
+}
+
+@media (max-width: $breakpoint-md) {
+  html {
+    font-size: 14px;
+  }
+
+  .container {
+    padding: 0 $spacing-md;
+  }
+}
