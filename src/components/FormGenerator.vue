@@ -10,42 +10,55 @@
       v-for="field in fields"
       :key="field.name"
       :class="['form-group', { 'form-group--inline': field.inline }]">
-      <label v-if="field.label && field.type !== 'checkbox'" :for="field.name" class="form-label">
-        {{ field.label }}
-        <span v-if="field.required" class="required">*</span>
-      </label>
+      <slot :name="`field-${field.name}`" :field="field" :meta="meta">
+        <slot :name="`label-${field.name}`" :field="field">
+          <label
+            v-if="field.label && field.type !== 'checkbox'"
+            :for="field.name"
+            class="form-label">
+            {{ field.label }}
+            <span v-if="field.required" class="required">*</span>
+          </label>
+        </slot>
 
-      <template v-if="field.type === 'checkbox'">
-        <label class="form-checkbox-label">
-          <Field
-            :name="field.name"
-            type="checkbox"
-            class="form-control form-checkbox"
-            :value="true"
-            :unchecked-value="false"
-            v-bind="field.attrs" />
-          <span>{{ field.label }}</span>
-        </label>
-      </template>
+        <template v-if="field.type === 'checkbox'">
+          <label class="form-checkbox-label">
+            <slot :name="`input-${field.name}`" :field="field">
+              <Field
+                :name="field.name"
+                type="checkbox"
+                class="form-control form-checkbox"
+                :value="true"
+                :unchecked-value="false"
+                v-bind="field.attrs" />
+            </slot>
+            <span>{{ field.label }}</span>
+          </label>
+        </template>
 
-      <template v-else>
-        <Field
-          :name="field.name"
-          :as="getFieldComponent(field.type)"
-          :type="field.type !== 'textarea' && field.type !== 'select' ? field.type : undefined"
-          v-bind="field.attrs"
-          @input="handleFieldInput($event, field)"
-          class="form-control">
-          <option v-for="option in field.options" :key="option.value" :value="option.value">
-            {{ option.label }}
-          </option>
-        </Field>
-      </template>
+        <template v-else>
+          <slot :name="`input-${field.name}`" :field="field">
+            <Field
+              :name="field.name"
+              :as="getFieldComponent(field.type)"
+              :type="field.type !== 'textarea' && field.type !== 'select' ? field.type : undefined"
+              v-bind="field.attrs"
+              @input="handleFieldInput($event, field)"
+              class="form-control">
+              <option v-for="option in field.options" :key="option.value" :value="option.value">
+                {{ option.label }}
+              </option>
+            </Field>
+          </slot>
+        </template>
 
-      <ErrorMessage :name="field.name" class="error-message" />
+        <slot :name="`error-${field.name}`" :field="field">
+          <ErrorMessage :name="field.name" class="error-message" />
+        </slot>
+      </slot>
     </div>
 
-    <slot name="form-actions" :meta="meta">
+    <slot name="form-actions" :meta="meta" :isSubmitting="isSubmitting">
       <div class="form-actions">
         <button type="submit" class="btn btn--primary" :disabled="submitDisabled || isSubmitting">
           {{ submitButtonText }}
